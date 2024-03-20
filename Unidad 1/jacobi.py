@@ -29,6 +29,16 @@ def despejar_incognitas(matriz):
         soluciones.append(ecuacion)
     return soluciones
 
+def jacobi_iteracion(matriz, solucion_inicial):
+    nueva_solucion = []
+    for i, fila in enumerate(matriz):
+        suma = fila[-1]
+        for j, coeficiente in enumerate(fila[:-1]):
+            if j != i:
+                suma -= coeficiente * solucion_inicial[j]
+        nueva_solucion.append(suma / fila[i])
+    return nueva_solucion
+
 def main():
     matriz = pedir_matriz()
     matriz = np.array(matriz)
@@ -46,6 +56,15 @@ def main():
         for eq in solucion:
             print(eq)
 
+    solucion_inicial = list(map(float, input("\nIngrese la solución inicial separada por espacios: ").split()))
+    num_iteraciones = int(input("\nIngrese el número de iteraciones: "))
+    
+    for _ in range(num_iteraciones):
+        nueva_solucion = jacobi_iteracion(matriz, solucion_inicial)
+        print("\nNueva solución:")
+        for i, valor in enumerate(nueva_solucion):
+            print(f"x{i+1} = {valor}")
+        solucion_inicial = nueva_solucion
+
 if __name__ == "__main__":
     main()
-
