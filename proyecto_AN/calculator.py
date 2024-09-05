@@ -30,13 +30,16 @@ class Calculator:
         error_b = self.cota_error(b)
         if election == '*':
             self.result = a * b
-            self.error = ((error_a / abs(a)) + (error_b / abs(b))) * abs(self.result)
+            error_relativo = (error_a / abs(a)) + (error_b / abs(b))
+            self.error = error_relativo * abs(self.result)
         elif election == '/':
             if b == 0:
                 self.result = 'Error: Division por cero'
                 self.error = 0
+                return self.result, self.error
             self.result = a / b
-            self.error = abs(self.result) * ((error_a / abs(a)) + (error_b / abs(b)))
+            error_relativo = (error_a / abs(a)) + (error_b / abs(b))
+            self.error = error_relativo * abs(self.result)
         
         return self.result, self.error
         
